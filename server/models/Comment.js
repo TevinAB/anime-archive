@@ -10,10 +10,14 @@ const commentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  likes: Number,
-  replies: [],
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  replies: [Schema.Types.ObjectId],
   rootComment: String, // If this comment is a reply to another comment
-  depth: Number, // This is used to determine how much margin is applied when displaying comment
+  marginDepth: Number, // This is used to determine how much margin is applied when displaying comment
+  pageId: String, //The page the comment belongs to
 });
 
 module.exports = Comment = mongoose.model('comment', commentSchema);
