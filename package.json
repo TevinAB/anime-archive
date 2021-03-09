@@ -2,9 +2,10 @@
   "name": "anime-archive",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": " server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/TevinAB/anime-archive/issues"
   },
-  "homepage": "https://github.com/TevinAB/anime-archive#readme"
+  "homepage": "https://github.com/TevinAB/anime-archive#readme",
+  "dependencies": {
+    "concurrently": "^6.0.0",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.19",
+    "nodemon": "^2.0.7"
+  }
 }
