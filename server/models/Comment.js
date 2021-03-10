@@ -15,7 +15,7 @@ const commentSchema = new Schema({
     default: 0,
   },
   replies: [Schema.Types.ObjectId],
-  rootComment: String, // If this comment is a reply to another comment
+  rootComment: Schema.Types.ObjectId, // If this comment is a reply to another comment
   marginDepth: Number, // This is used to determine how much margin is applied when displaying comment
   pageId: String, //The page the comment belongs to
 });
