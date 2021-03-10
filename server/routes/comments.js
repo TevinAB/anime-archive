@@ -5,6 +5,8 @@ const {
   addComment,
   updateComment,
   deleteComment,
+  likeComment,
+  unlikeComment,
 } = require('../handlers/comments');
 
 /**
@@ -33,5 +35,19 @@ router.put('/comments/:id', updateComment);
  * @access Public [change to private]
  */
 router.delete('/comments/:id', deleteComment);
+
+/**
+ * @description Used to like a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.put('/comments/like/:id', likeComment);
+
+/**
+ * @description Used to unlike a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.put('/comments/unlike/:id', unlikeComment);
 
 module.exports = router;
