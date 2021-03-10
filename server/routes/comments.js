@@ -1,42 +1,53 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../models/Comment');
+const {
+  getComments,
+  addComment,
+  updateComment,
+  deleteComment,
+  likeComment,
+  unlikeComment,
+} = require('../handlers/comments');
 
 /**
- * @route /comments/:pageId
  * @description Used to retrieve all comments for a given page
+ * @param id - Page id
  * @access Public
  */
-router.get('/comments/:pageId', async (req, res) => {
-  try {
-    const { pageId } = req.params;
-    const comments = await Comment.find({ pageId }).select('-__v');
-    res.json(comments);
-  } catch (error) {
-    res.status(404).send({ msg: 'Comments failed to load' });
-  }
-});
+router.get('/comments/:id', getComments);
 
 /**
- * @route /comments
  * @description Used to add a new comment to a page
  * @access Public [change to private]
  */
-router.post('/comments', async (req, res) => {
-  const newComment = new Comment({
-    username: req.body.username,
-    userPic: req.body.userPic,
-    commentBody: req.body.commentBody,
-    rootComment: req.body.rootComment,
-    marginDepth: req.body.marginDepth,
-    pageId: req.body.pageId,
-    replies: [],
-  });
+router.post('/comments', addComment);
 
-  try {
-    const savedComment = await newComment.save();
-    res.status(201).json(savedComment);
-  } catch (error) {
-    res.status(400).json({ msg: 'Failed to add comment' });
-  }
-});
+/**
+ * @description Used to update a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.put('/comments/:id', updateComment);
+
+/**
+ * @description Used to delete a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.delete('/comments/:id', deleteComment);
+
+/**
+ * @description Used to like a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.put('/comments/like/:id', likeComment);
+
+/**
+ * @description Used to unlike a comment
+ * @param id - Comment id
+ * @access Public [change to private]
+ */
+router.put('/comments/unlike/:id', unlikeComment);
+
+module.exports = router;
