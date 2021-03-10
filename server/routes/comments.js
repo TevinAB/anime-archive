@@ -10,44 +10,50 @@ const {
 } = require('../handlers/comments');
 
 /**
+ * @route /comments/:id
  * @description Used to retrieve all comments for a given page
  * @param id - Page id
  * @access Public
  */
-router.get('/comments/:id', getComments);
+router.get('/:id', getComments);
 
 /**
+ * @route /comments
  * @description Used to add a new comment to a page
  * @access Public [change to private]
  */
-router.post('/comments', addComment);
+router.post('/', addComment);
 
 /**
+ * @route /comments/:id
  * @description Used to update a comment
  * @param id - Comment id
  * @access Public [change to private]
  */
-router.put('/comments/:id', updateComment);
+router.put('/:id', updateComment);
 
 /**
+ * @route /comments/:id
  * @description Used to delete a comment
  * @param id - Comment id
  * @access Public [change to private]
  */
-router.delete('/comments/:id', deleteComment);
+router.delete('/:id', deleteComment);
 
 /**
+ * @route /comments/:id
  * @description Used to like a comment
  * @param id - Comment id
  * @access Public [change to private]
  */
-router.put('/comments/like/:id', likeComment);
+router.put('/like/:id', likeComment);
 
 /**
+ * @route /comments/:id
  * @description Used to unlike a comment
  * @param id - Comment id
  * @access Public [change to private]
  */
-router.put('/comments/unlike/:id', unlikeComment);
+router.put('/unlike/:id', unlikeComment);
 
 module.exports = router;
