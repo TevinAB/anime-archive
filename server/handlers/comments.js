@@ -100,6 +100,8 @@ module.exports = {
       errorMessage
     );
   },
+  editHandler,
+  updateAndSaveDoc,
 };
 
 async function editHandler(res, updateDoc, errorMsg) {
