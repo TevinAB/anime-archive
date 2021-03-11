@@ -11,7 +11,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["client"]
   },
   "repository": {
     "type": "git",
