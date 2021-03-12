@@ -48,7 +48,7 @@ module.exports = {
       res,
       updateAndSaveDoc.bind(
         this,
-        req.id,
+        req.params.id,
         Comment,
         (comment) =>
           (comment.commentBody = req.body.commentBody || comment.commentBody)
@@ -64,7 +64,7 @@ module.exports = {
       res,
       updateAndSaveDoc.bind(
         this,
-        req.id,
+        req.params.id,
         Comment,
         (comment) => (comment.commentBody = 'This comment was deleted')
       ),
@@ -79,7 +79,7 @@ module.exports = {
       res,
       updateAndSaveDoc.bind(
         this,
-        req.id,
+        req.params.id,
         Comment,
         (comment) => (comment.likes += 1)
       ),
@@ -94,7 +94,7 @@ module.exports = {
       res,
       updateAndSaveDoc.bind(
         this,
-        req.id,
+        req.params.id,
         Comment,
         (comment) => (comment.likes -= 1)
       ),
