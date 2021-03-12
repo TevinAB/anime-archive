@@ -1,4 +1,4 @@
-const { editHandler } = require('./comments');
+const { editHandler, updateAndSaveDoc } = require('./helpers');
 
 describe('Edit handler tests', () => {
   let mockUpdateDoc = jest.fn(() => 'doc updated');
@@ -51,5 +51,47 @@ describe('Edit handler tests', () => {
     await editHandler(mockResponse, null, errorMessage);
 
     expect(mockResponse.json).toBeCalledWith({ msg: errorMessage });
+  });
+});
+
+describe('UpdateAndSaveDoc tests', () => {
+  let newData = 'new data'; //used to test update function
+  let documentId = 123;
+  let mockModel = {
+    findById: jest.fn(() => {
+      return mockDocument;
+    }),
+  };
+  let mockDocument; //the document returned by the model
+  let mockUpdateFunction = jest.fn((document) => (document.data = newData));
+
+  //reset the document before each test
+  beforeEach(() => {
+    mockDocument = {
+      data: 'old data',
+      save: jest.fn(() => mockDocument),
+    };
+  });
+
+  it('should update a document using the given update callback function', async () => {
+    let updatedDocument = await updateAndSaveDoc(
+      documentId,
+      mockModel,
+      mockUpdateFunction
+    );
+
+    expect(updatedDocument.data).toBe(newData);
+  });
+
+  it('should save the document', async () => {
+    await updateAndSaveDoc(documentId, mockModel, mockUpdateFunction);
+
+    expect(mockDocument.save.mock.calls.length).toBe(1);
+  });
+
+  it('should use the id to find the document', async () => {
+    await updateAndSaveDoc(documentId, mockModel, mockUpdateFunction);
+
+    expect(mockModel.findById).toBeCalledWith(documentId);
   });
 });
