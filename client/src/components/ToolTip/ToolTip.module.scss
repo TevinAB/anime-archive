@@ -1,0 +1,51 @@
+$space-calc: calc(100% + 10px);
+$offset: 50%;
+$transform-h: translateX(-50%);
+$transform-v: translateY(-50%);
+
+.tool_tip_wrapper {
+  position: relative;
+}
+
+.tool_tip {
+  background-color: black;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  padding: 0.25em;
+  display: none;
+  opacity: 0;
+  position: absolute;
+  transition: opacity ease-in 0.1s;
+  user-select: none;
+  white-space: pre;
+}
+
+.show_tool_tip {
+  display: block;
+  opacity: 0.5;
+}
+
+.bottom {
+  top: $space-calc;
+  left: $offset;
+  transform: $transform-h;
+}
+
+.top {
+  bottom: $space-calc;
+  left: $offset;
+  transform: $transform-h;
+}
+
+.left {
+  right: $space-calc;
+  top: $offset;
+  transform: $transform-v;
+}
+
+.right {
+  left: $space-calc;
+  top: $offset;
+  transform: $transform-v;
+}
