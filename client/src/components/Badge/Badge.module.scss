@@ -1,0 +1,19 @@
+$radius: 12px;
+
+.badge {
+  color: white;
+  border-radius: $radius;
+  background-color: #f50057;
+  user-select: none;
+  min-width: $radius * 2;
+  height: $radius * 2;
+  font-size: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  position: absolute;
+  //transform: translate(50%, -50%);
+}
