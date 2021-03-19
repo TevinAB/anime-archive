@@ -3,14 +3,16 @@ import styles from './ToolTip.module.scss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-function ToolTip({
-  children,
-  text,
-  placement,
-  toolTipStyle,
-  containerStyle,
-  ...rest
-}) {
+function ToolTip(props) {
+  const {
+    children,
+    text,
+    placement,
+    toolTipStyle,
+    containerStyle,
+    ...rest
+  } = props;
+
   const [isHovering, setHovering] = useState(false);
 
   let toolTipClasses = classNames(styles.tool_tip, {

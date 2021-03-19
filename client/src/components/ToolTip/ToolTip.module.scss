@@ -8,14 +8,14 @@ $transform-v: translateY(-50%);
 }
 
 .tool_tip {
+  position: absolute;
   background-color: black;
   color: white;
   font-size: 0.75rem;
   border-radius: 6px;
   padding: 0.25em;
-  display: none;
   opacity: 0;
-  position: absolute;
+  display: none;
   transition: opacity ease-in 0.1s;
   user-select: none;
   white-space: pre;
