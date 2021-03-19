@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-function DataFetch({ path, render }) {
+function DataFetch(props) {
+  const { path, render } = props;
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
 
