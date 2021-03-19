@@ -1,11 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 import styles from './Badge.module.scss';
 import PropTypes from 'prop-types';
 
 function Badge(props) {
-  const { value, ...rest } = props;
+  const { value, badgeClass, ...rest } = props;
+  const badgeClasses = classNames(styles.badge, badgeClass);
+
   return (
-    <span className={styles.badge} {...rest}>
+    <span className={badgeClasses} {...rest}>
       {value}
     </span>
   );
@@ -13,6 +16,7 @@ function Badge(props) {
 
 Badge.propTypes = {
   value: PropTypes.string.isRequired,
+  badgeClass: PropTypes.array,
 };
 
 export default Badge;
