@@ -9,23 +9,30 @@ function ToolTip(props) {
     text,
     placement,
     toolTipStyle,
+    toolTipClass,
     containerStyle,
+    containerClass,
     ...rest
   } = props;
 
   const [isHovering, setHovering] = useState(false);
 
+  //Build the final class string for the tooltip
   let toolTipClasses = classNames(styles.tool_tip, {
     [styles.show_tool_tip]: isHovering,
     [styles.top]: placement === 'top',
     [styles.bottom]: placement === 'bottom',
     [styles.left]: placement === 'left',
     [styles.right]: placement === 'right',
+    toolTipClass,
   });
+
+  //Build class string for tool tip container
+  let containerClasses = classNames(styles.tool_tip_wrapper, containerClass);
 
   return (
     <div
-      className={styles.tool_tip_wrapper}
+      className={containerClasses}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       style={{ ...containerStyle }}
@@ -33,7 +40,11 @@ function ToolTip(props) {
       data-testid='tool-container'
     >
       {children}
-      <span className={toolTipClasses} style={{ ...toolTipStyle }}>
+      <span
+        aria-hidden='true'
+        className={toolTipClasses}
+        style={{ ...toolTipStyle }}
+      >
         {text}
       </span>
     </div>
@@ -49,6 +60,8 @@ ToolTip.propTypes = {
   placement: PropTypes.string,
   toolTipStyle: PropTypes.object,
   containerStyle: PropTypes.object,
+  toolTipClass: PropTypes.array,
+  containerClass: PropTypes.array,
 };
 
 export default ToolTip;
