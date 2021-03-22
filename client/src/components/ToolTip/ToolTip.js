@@ -40,7 +40,11 @@ function ToolTip(props) {
       data-testid='tool-container'
     >
       {children}
-      <span className={toolTipClasses} style={{ ...toolTipStyle }}>
+      <span
+        aria-hidden='true'
+        className={toolTipClasses}
+        style={{ ...toolTipStyle }}
+      >
         {text}
       </span>
     </div>

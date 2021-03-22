@@ -9,6 +9,7 @@ function IconButton(props) {
     iconClass,
     tooltip,
     toolTipClass,
+    toolTipStyle,
     buttonType,
     buttonClass,
     onClick,
@@ -20,7 +21,11 @@ function IconButton(props) {
   const iconClasses = classNames(iconClass);
 
   return (
-    <ToolTip containerClasses={toolTipClasses} text={tooltip}>
+    <ToolTip
+      containerClass={[toolTipClasses]}
+      text={tooltip}
+      toolTipStyle={toolTipStyle}
+    >
       <button
         className={buttonClasses}
         tabIndex={0}
@@ -37,9 +42,9 @@ function IconButton(props) {
 
 IconButton.propTypes = {
   iconClass: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired,
   tooltip: PropTypes.string.isRequired,
-  tooltipClass: PropTypes.array,
+  onClick: PropTypes.func,
+  toolTipClass: PropTypes.array,
   ariaLabel: PropTypes.string,
   buttonType: PropTypes.string,
   buttonClass: PropTypes.array,
