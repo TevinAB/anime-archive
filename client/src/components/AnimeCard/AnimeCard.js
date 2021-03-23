@@ -24,7 +24,7 @@ function AnimeCard(props) {
       <Badge value={badgeValue} badgeClass={[styles.badge]} />
       <CardContent rootClass={[cardClasses]}>
         <CardContent>
-          <img className={styles.img} src={image} alt='fate/zero' />
+          <img className={styles.img} src={image} alt={alt} />
         </CardContent>
         <CardContent
           className={[styles.details_wrapper]}
