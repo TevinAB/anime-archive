@@ -13,6 +13,7 @@ function AnimeCard(props) {
   const titleRef = useRef(null);
   const [bottom, setBottom] = useState(0);
 
+  //This allows the detail section to animate robustly regradless of font-size
   useEffect(() => {
     const detailHeight = details.current.clientHeight;
     const titleHeight = titleRef.current.clientHeight;

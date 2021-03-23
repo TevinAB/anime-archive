@@ -40,7 +40,7 @@ function InfoBox(props) {
 InfoBox.propTypes = {
   imagePath: PropTypes.string.isRequired,
   altText: PropTypes.string,
-  headerText: PropTypes.string,
+  title: PropTypes.string,
   bodyTexts: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,

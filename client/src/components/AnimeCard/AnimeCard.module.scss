@@ -1,4 +1,5 @@
 $width: 120px;
+$height: 185px;
 $title-font: 0.75rem;
 
 .card_wrapper {
@@ -9,6 +10,8 @@ $title-font: 0.75rem;
 .card {
   width: $width;
   max-width: $width;
+  height: $height;
+  max-height: $height;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
@@ -55,5 +58,8 @@ $title-font: 0.75rem;
 @media screen and (max-width: 320px) {
   .card {
     width: 100px;
+    max-width: 100px;
+    height: 165px;
+    max-height: 165px;
   }
 }
