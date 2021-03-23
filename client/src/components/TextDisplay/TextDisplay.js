@@ -4,14 +4,21 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 function TextDisplay(props) {
-  const { headerText, bodyTexts, headerStyle, headerClass, bodyClass } = props;
+  const {
+    headerText,
+    bodyTexts,
+    headerStyle,
+    headerClass,
+    bodyClass,
+    ...rest
+  } = props;
 
   const headerClasses = classNames(styles.header, headerClass);
   const bodyClasses = classNames(styles.body_text, bodyClass);
   const wrapperClasses = classNames(styles.main_wrapper);
 
   return (
-    <div className={wrapperClasses}>
+    <div className={wrapperClasses} {...rest}>
       <h2 className={headerClasses} style={headerStyle}>
         {headerText}
       </h2>
