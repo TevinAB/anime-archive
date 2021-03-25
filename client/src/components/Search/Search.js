@@ -8,7 +8,7 @@ import InfoBox from '../InfoBox';
 const SEARCH_RESULTS_LIMIT = 10;
 
 function Search(props) {
-  const { rootClass } = props;
+  const { rootClass, ...rest } = props;
 
   const [searchText, setSearchText] = useState('');
   const [searchType, setSearchType] = useState('anime');
@@ -60,6 +60,7 @@ function Search(props) {
       className={rootClasses}
       ref={searchRef}
       onKeyDown={handleKeyDown}
+      {...rest}
     >
       {/** The search box, remember to add action path to form*/}
       <form method='get'>

@@ -1,0 +1,75 @@
+@import '../../sass-partials/variables';
+
+$endMargin: 32px;
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $lineColor;
+
+  box-shadow: rgba(0, 0, 0, 0.158) 0px 0px 15px,
+    rgba(0, 0, 0, 0.158) 0px 0px 8px 1px;
+
+  h3 {
+    font-size: 18.72px;
+  }
+}
+
+.logo {
+  margin-left: $endMargin;
+}
+
+.button_container {
+  margin-right: $endMargin;
+}
+
+.md_icon {
+  font-size: 20.4px;
+}
+
+header .search_container {
+  position: absolute;
+  width: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all ease-in 0.2s;
+}
+
+header .search_button {
+  display: none;
+}
+
+@media screen and (max-width: 480px) {
+  .header h3 {
+    font-size: 16px;
+  }
+
+  .md_icon {
+    font-size: 18.4px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header .search_container {
+    top: -100%;
+    transform: translate(-50%, -0%);
+    display: none;
+  }
+  header > .search_visible {
+    top: 125%;
+    display: inline-block;
+  }
+
+  header .search_button {
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  header .search_visible {
+    top: 50% !important;
+  }
+}
