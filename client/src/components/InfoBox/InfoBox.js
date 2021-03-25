@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import TextDisplay from '../TextDisplay';
 import styles from './InfoBox.module.scss';
 import PropTypes from 'prop-types';
@@ -8,11 +8,14 @@ function InfoBox(props) {
   const {
     imagePath,
     altText,
-    headerText,
+    title,
     bodyTexts,
     mainWrapperClass,
     imageClass,
     imgWrapperClass,
+    currentIndex,
+    activeIndex,
+    ...rest
   } = props;
 
   const imageWrapperClasses = classNames(imgWrapperClass);
@@ -21,14 +24,19 @@ function InfoBox(props) {
     styles.info_box_wrapper,
     mainWrapperClass
   );
+  const wrapperRef = useRef(null); //used to focus the div when used in search results
+
+  useEffect(() => {
+    if (activeIndex === currentIndex) wrapperRef.current.focus();
+  });
 
   return (
-    <div className={mainWrapperClasses}>
+    <div ref={wrapperRef} className={mainWrapperClasses} {...rest}>
       <div className={imageWrapperClasses}>
         <img className={imageClasses} src={imagePath} alt={altText} />
       </div>
       <TextDisplay
-        headerText={headerText}
+        headerText={title}
         bodyTexts={bodyTexts}
         headerClass={[styles.title]}
         bodyClass={[styles.body]}
@@ -47,6 +55,8 @@ InfoBox.propTypes = {
       value: PropTypes.string,
     })
   ),
+  currentIndex: PropTypes.number, //for navigating with keyboard in a search result list
+  activeIndex: PropTypes.number, //for navigating with keyboard in a search result list
   imageClass: PropTypes.array,
   mainWrapperClass: PropTypes.array,
   imgWrapperClass: PropTypes.array,
@@ -54,7 +64,7 @@ InfoBox.propTypes = {
 
 InfoBox.defaultProps = {
   altText: '',
-  bodyText: [],
+  bodyTexts: [],
 };
 
 export default InfoBox;
