@@ -5,16 +5,21 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import InfoBox from '../InfoBox';
 
-function Search() {
+const SEARCH_RESULTS_LIMIT = 10;
+
+function Search(props) {
+  const { rootClass } = props;
+
   const [searchText, setSearchText] = useState('');
   const [searchType, setSearchType] = useState('anime');
   const [isInputFocus, setInputFocus] = useState(true);
   const [clickedAway, setClickedAway] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const searchRef = useRef(null);
 
-  const { data, error, isLoading } = useFetch(
-    buildPath(searchType, searchText)
-  );
+  const { data, isLoading } = useFetch(buildPath(searchType, searchText));
+
+  const rootClasses = classNames(styles.main_wrapper, rootClass);
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickAway);
@@ -28,6 +33,23 @@ function Search() {
       setClickedAway(false); //clicked inside the area
     } else {
       setClickedAway(true); //clicked out of search area
+      setActiveIndex(-1); //reset the active index of search item so focus isn't locked
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    //increases the active index and moves down the result list
+    if (event.key === 'ArrowDown') {
+      //if its about to go out of bounds, start over
+      activeIndex >= SEARCH_RESULTS_LIMIT - 1
+        ? setActiveIndex(0)
+        : setActiveIndex(activeIndex + 1);
+    }
+
+    if (event.key === 'ArrowUp') {
+      activeIndex <= 0
+        ? setActiveIndex(SEARCH_RESULTS_LIMIT - 1)
+        : setActiveIndex(activeIndex - 1);
     }
   };
 
@@ -35,8 +57,9 @@ function Search() {
     <div
       onFocus={() => setInputFocus(true)}
       onBlur={() => setInputFocus(false)}
-      className={styles.main_wrapper}
+      className={rootClasses}
       ref={searchRef}
+      onKeyDown={handleKeyDown}
     >
       {/** The search box, remember to add action path to form*/}
       <form method='get'>
@@ -67,15 +90,16 @@ function Search() {
         data={data}
         validSearch={searchText.length > 2}
         showResults={isInputFocus || !clickedAway} //show results if in focus or isn't clicked out of
+        activeIndex={activeIndex}
       />
     </div>
   );
 }
 
 function SearchResults(props) {
-  const { isLoading, data, validSearch, showResults } = props;
+  const { isLoading, data, validSearch, showResults, activeIndex } = props;
 
-  //only display results if search text is greater than 3 characters and its finished loading
+  //display results if search text is valid and loading is finished
   const resultDisplayClasses = classNames(
     validSearch && !isLoading ? styles.results : styles.remove
   );
@@ -90,7 +114,7 @@ function SearchResults(props) {
       <div className={styles.results_wrapper}>
         <div className={resultDisplayClasses}>
           {data.results &&
-            data.results.map((item) => {
+            data.results.map((item, index) => {
               return (
                 <InfoBox
                   imageClass={[styles.img]}
@@ -99,6 +123,9 @@ function SearchResults(props) {
                   onClick={() => console.log('clicked')}
                   //Data has different fields depending on resource type. Anime->title | Character->name
                   title={item.title || item.name}
+                  tabIndex={0}
+                  currentIndex={index}
+                  activeIndex={activeIndex}
                 />
               );
             })}
@@ -109,10 +136,22 @@ function SearchResults(props) {
   );
 }
 
+Search.propTypes = {
+  rootClass: PropTypes.array,
+};
+
+SearchResults.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  data: PropTypes.array.isRequired,
+  validSearch: PropTypes.bool.isRequired,
+  showResults: PropTypes.bool.isRequired,
+  activeIndex: PropTypes.number.isRequired,
+};
+
 //accepts the text in the search bar and use it to build a path to the api
 function buildPath(type, text) {
   if (text.length < 3) return '';
-  return `https://api.jikan.moe/v3/search/${type}?q=${text}&page=1&limit=10`;
+  return `https://api.jikan.moe/v3/search/${type}?q=${text}&page=1&limit=${SEARCH_RESULTS_LIMIT}`;
 }
 
 export default Search;
