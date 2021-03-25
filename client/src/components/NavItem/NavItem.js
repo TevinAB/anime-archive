@@ -5,22 +5,25 @@ import classNames from 'classnames';
 import IconButton from '../IconButton';
 
 function NavItem(props) {
-  const { href, text, iconClass, toolTip } = props;
+  const { text, iconClass, toolTip, onClick } = props;
 
   const iconClasses = classNames(iconClass);
 
   return (
-    <a className={styles.link} href={href} aria-label={text}>
-      <IconButton iconClass={[iconClasses, styles.md_icon]} tooltip={toolTip} />
-    </a>
+    <IconButton
+      iconClass={[iconClasses, styles.md_icon]}
+      tooltip={toolTip}
+      ariaLabel={text}
+      onClick={onClick}
+    />
   );
 }
 
 NavItem.propTypes = {
-  href: PropTypes.string.isRequired,
   iconClass: PropTypes.array.isRequired,
   toolTip: PropTypes.string.isRequired,
   text: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default NavItem;
