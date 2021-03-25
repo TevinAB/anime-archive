@@ -8,11 +8,12 @@ function InfoBox(props) {
   const {
     imagePath,
     altText,
-    headerText,
+    title,
     bodyTexts,
     mainWrapperClass,
     imageClass,
     imgWrapperClass,
+    ...rest
   } = props;
 
   const imageWrapperClasses = classNames(imgWrapperClass);
@@ -23,12 +24,12 @@ function InfoBox(props) {
   );
 
   return (
-    <div className={mainWrapperClasses}>
+    <div className={mainWrapperClasses} {...rest}>
       <div className={imageWrapperClasses}>
         <img className={imageClasses} src={imagePath} alt={altText} />
       </div>
       <TextDisplay
-        headerText={headerText}
+        headerText={title}
         bodyTexts={bodyTexts}
         headerClass={[styles.title]}
         bodyClass={[styles.body]}
@@ -54,7 +55,7 @@ InfoBox.propTypes = {
 
 InfoBox.defaultProps = {
   altText: '',
-  bodyText: [],
+  bodyTexts: [],
 };
 
 export default InfoBox;
