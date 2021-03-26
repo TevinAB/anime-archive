@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 let cancelToken = null;
 function useFetch(path) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
 

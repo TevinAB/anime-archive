@@ -143,7 +143,7 @@ Search.propTypes = {
 
 SearchResults.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
   validSearch: PropTypes.bool.isRequired,
   showResults: PropTypes.bool.isRequired,
   activeIndex: PropTypes.number.isRequired,
