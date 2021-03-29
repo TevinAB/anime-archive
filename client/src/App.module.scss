@@ -9,7 +9,8 @@ $title-font: 0.75rem;
   margin-top: 2rem;
 }
 
-.flex {
+div .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 4rem;
 }

@@ -7,7 +7,9 @@ $endMargin: 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid $lineColor;
+  border-bottom: 1px solid $lineColor;
+  width: 100%;
+  max-width: 100%;
 
   box-shadow: rgba(0, 0, 0, 0.158) 0px 3px 6px;
 

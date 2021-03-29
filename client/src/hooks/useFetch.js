@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 /**
@@ -6,11 +6,11 @@ import axios from 'axios';
  * @param {*} path - The path to fetch from.
  * @returns An object with fields {data, isLoading, error}.
  */
-let cancelToken = null;
 function useFetch(path) {
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const cancelToken = useRef(null);
 
   useEffect(() => {
     async function getData() {
@@ -18,14 +18,15 @@ function useFetch(path) {
       try {
         setLoading(true);
         //If there is a cancel token, call cancel
-        if (cancelToken) cancelToken.cancel();
+        if (cancelToken.current) cancelToken.current.cancel();
 
         //save the cancel token that represents the next request
-        cancelToken = axios.CancelToken.source();
+        cancelToken.current = axios.CancelToken.source();
 
         const response = await axios.get(path, {
-          cancelToken: cancelToken.token,
+          cancelToken: cancelToken.current.token,
         });
+
         setData(response.data);
         setLoading(false);
       } catch (error) {

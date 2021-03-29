@@ -15,7 +15,7 @@ function Badge(props) {
 }
 
 Badge.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   badgeClass: PropTypes.array,
 };
 
