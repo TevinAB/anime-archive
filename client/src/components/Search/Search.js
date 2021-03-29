@@ -8,14 +8,17 @@ import InfoBox from '../InfoBox';
 const SEARCH_RESULTS_LIMIT = 10;
 
 function Search(props) {
-  const { rootClass, ...rest } = props;
+  const { rootClass, history, ...rest } = props;
 
   const [searchText, setSearchText] = useState('');
   const [searchType, setSearchType] = useState('anime');
   const [isInputFocus, setInputFocus] = useState(true);
   const [clickedAway, setClickedAway] = useState(true);
+  //used for navigating search results in drop-down with keyboard
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [searchPressed, setSearchPressed] = useState(false);
   const searchRef = useRef(null);
+  let showResults = (isInputFocus || !clickedAway) && !searchPressed;
 
   const { data, isLoading } = useFetch(buildPath(searchType, searchText));
 
@@ -31,6 +34,7 @@ function Search(props) {
   const handleClickAway = (event) => {
     if (searchRef.current && searchRef.current.contains(event.target)) {
       setClickedAway(false); //clicked inside the area
+      setSearchPressed(false);
     } else {
       setClickedAway(true); //clicked out of search area
       setActiveIndex(-1); //reset the active index of search item so focus isn't locked
@@ -53,6 +57,12 @@ function Search(props) {
     }
   };
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    setSearchPressed(true);
+    history.push(`/search/${searchType}/?q=${searchText}&page=1`);
+  };
+
   return (
     <div
       onFocus={() => setInputFocus(true)}
@@ -63,7 +73,7 @@ function Search(props) {
       {...rest}
     >
       {/** The search box, remember to add action path to form*/}
-      <form method='get'>
+      <form method='get' onSubmit={handleSearch}>
         <div className={styles.search_wrapper}>
           <select
             aria-label='search type'
@@ -90,15 +100,25 @@ function Search(props) {
         isLoading={isLoading}
         data={data}
         validSearch={searchText.length > 2}
-        showResults={isInputFocus || !clickedAway} //show results if in focus or isn't clicked out of
+        showResults={showResults} //show results if in focus or isn't clicked out of
         activeIndex={activeIndex}
+        history={history}
+        searchType={searchType}
       />
     </div>
   );
 }
 
 function SearchResults(props) {
-  const { isLoading, data, validSearch, showResults, activeIndex } = props;
+  const {
+    isLoading,
+    data,
+    validSearch,
+    showResults,
+    activeIndex,
+    history,
+    searchType,
+  } = props;
 
   //display results if search text is valid and loading is finished
   const resultDisplayClasses = classNames(
@@ -118,10 +138,18 @@ function SearchResults(props) {
             data.results.map((item, index) => {
               return (
                 <InfoBox
+                  mainWrapperClass={[styles.search_item]}
                   imageClass={[styles.img]}
                   key={item.mal_id}
                   imagePath={item.image_url}
-                  onClick={() => console.log('clicked')}
+                  onClick={() =>
+                    history.push(
+                      `/information/${searchType}/?id=${item.mal_id}`
+                    )
+                  }
+                  onKeyDown={(event) =>
+                    event.key === 'Enter' ? event.target.click() : ''
+                  }
                   //Data has different fields depending on resource type. Anime->title | Character->name
                   title={item.title || item.name}
                   tabIndex={0}
@@ -138,6 +166,7 @@ function SearchResults(props) {
 }
 
 Search.propTypes = {
+  history: PropTypes.object.isRequired,
   rootClass: PropTypes.array,
 };
 
