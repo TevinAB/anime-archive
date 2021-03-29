@@ -6,6 +6,7 @@ import Search from '../Search';
 import IconButton from '../IconButton';
 
 function NavBar(props) {
+  const { history } = props;
   const [showSearch, setShowSearch] = useState(false);
 
   const searchClasses = classNames(
@@ -17,7 +18,7 @@ function NavBar(props) {
     <>
       <header className={styles.header}>
         <h3 className={styles.logo}>AnimeArchive</h3>
-        <Search id='search' rootClass={[searchClasses]} />
+        <Search id='search' rootClass={[searchClasses]} history={history} />
         <div className={styles.button_container}>
           {/**should only show on small screens */}
           <IconButton
@@ -36,7 +37,7 @@ function NavBar(props) {
           />
           {/**should show login/logout depending on auth state */}
           <IconButton
-            iconClass={[styles.md_icon, 'fas fa-user']}
+            iconClass={[styles.md_icon, 'fas fa-sign-in-alt']}
             tooltip={'login'}
             ariaLabel={'login'}
             onClick={() => console.log('clicked')}

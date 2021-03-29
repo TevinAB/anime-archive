@@ -1,0 +1,57 @@
+@import '../../sass-partials/variables';
+.section_wrapper {
+  min-width: 100%;
+  margin-bottom: 4rem;
+}
+
+.item_wrapper {
+  & > div {
+    border-left: 1px solid $lineColor;
+    border-right: 1px solid $lineColor;
+    border-top: 1px solid $lineColor;
+    min-height: 110px;
+  }
+
+  & > :last-child {
+    border-bottom: 1px solid $lineColor;
+  }
+}
+
+.img {
+  width: 64px;
+}
+
+.pagination_container {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  li {
+    display: inline-block;
+    font-size: 1.1rem;
+    padding: 0.375em;
+    border: 1px solid $lineColor;
+    cursor: pointer;
+
+    a {
+      padding: 0.375em;
+    }
+  }
+
+  li:hover {
+    background-color: rgba(153, 153, 153, 0.281);
+  }
+
+  &:first-child {
+    padding-inline-start: 0;
+  }
+}
+
+.active_page {
+  background-color: rgba(153, 153, 153, 0.281);
+}
+
+.info_box_wrapper {
+  cursor: pointer;
+}
