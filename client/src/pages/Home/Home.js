@@ -53,7 +53,7 @@ function DisplaySection(props) {
         badgeValue={item.rank}
         onClick={() =>
           history.push(
-            `/information/${isAnime ? 'anime' : 'character'}/${item.mal_id}`
+            `/information/${isAnime ? 'anime' : 'character'}/?id=${item.mal_id}`
           )
         }
         //different type has different field in json response so type check is needed
