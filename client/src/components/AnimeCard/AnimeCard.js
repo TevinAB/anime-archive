@@ -7,7 +7,7 @@ import CardContent from '../CardContent';
 import Badge from '../Badge';
 
 function AnimeCard(props) {
-  const { badgeValue, image, alt, title, score } = props;
+  const { badgeValue, image, alt, title, score, ...rest } = props;
   const cardClasses = classNames(styles.card);
   const details = useRef(null);
   const titleRef = useRef(null);
@@ -21,7 +21,7 @@ function AnimeCard(props) {
   }, [details, titleRef]);
 
   return (
-    <Card cardClass={[styles.card_wrapper]}>
+    <Card cardClass={[styles.card_wrapper]} {...rest}>
       <Badge value={badgeValue} badgeClass={[styles.badge]} />
       <CardContent rootClass={[cardClasses]}>
         <CardContent>
@@ -47,7 +47,7 @@ AnimeCard.propTypes = {
   alt: PropTypes.string,
   title: PropTypes.string,
   score: PropTypes.string,
-  badgeValue: PropTypes.string,
+  badgeValue: PropTypes.number,
 };
 
 export default AnimeCard;
