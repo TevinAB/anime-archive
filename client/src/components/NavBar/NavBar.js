@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './NavBar.module.scss';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Search from '../Search';
@@ -16,8 +17,11 @@ function NavBar(props) {
 
   return (
     <>
-      <header className={styles.header}>
-        <h3 className={styles.logo}>AnimeArchive</h3>
+      <header role='banner' className={styles.header}>
+        <Link to='/' className={styles.link}>
+          <h3 className={styles.logo}>AnimeArchive</h3>
+        </Link>
+
         <Search id='search' rootClass={[searchClasses]} history={history} />
         <div className={styles.button_container}>
           {/**should only show on small screens */}
@@ -47,5 +51,9 @@ function NavBar(props) {
     </>
   );
 }
+
+NavBar.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default NavBar;

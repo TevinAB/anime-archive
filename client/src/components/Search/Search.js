@@ -76,6 +76,7 @@ function Search(props) {
       <form method='get' onSubmit={handleSearch}>
         <div className={styles.search_wrapper}>
           <select
+            className={styles.selectBox}
             aria-label='search type'
             onChange={(e) => setSearchType(e.target.value)}
           >
@@ -142,11 +143,11 @@ function SearchResults(props) {
                   imageClass={[styles.img]}
                   key={item.mal_id}
                   imagePath={item.image_url}
-                  onClick={() =>
+                  onClick={() => {
                     history.push(
                       `/information/${searchType}/?id=${item.mal_id}`
-                    )
-                  }
+                    );
+                  }}
                   onKeyDown={(event) =>
                     event.key === 'Enter' ? event.target.click() : ''
                   }

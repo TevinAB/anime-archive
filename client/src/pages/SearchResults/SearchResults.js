@@ -7,11 +7,12 @@ import ReactPaginate from 'react-paginate';
 function SearchResults(props) {
   const { history } = props;
   const { searchType } = props.match.params;
+  //url's query string
   const [queryString, setQueryString] = useState(window.location.search);
 
   useEffect(() => {
     //listen for change in url, returns a clean up function to unlisten
-    return history.listen((location, action) => {
+    return history.listen((location) => {
       setQueryString(location.search);
     });
   });
@@ -19,9 +20,9 @@ function SearchResults(props) {
   const params = new URLSearchParams(queryString);
   const searchText = params.get('q');
   const pageNum = params.get('page');
-  const path = buildSearchPath(searchType, searchText, pageNum);
+  const apiPath = buildSearchPath(searchType, searchText, pageNum);
 
-  const { data, isLoading } = useFetch(path);
+  const { data, isLoading } = useFetch(apiPath);
 
   const handlePageChange = (page) => {
     //weird glitch with page num starting from zero instead of 1 with pagination comp
@@ -45,6 +46,7 @@ function SearchResults(props) {
         }
         //Data has different fields depending on resource type. Anime->title | Character->name
         title={item.title || item.name}
+        //Displays a synopsis with each search item if that field is available
         bodyTexts={[{ value: item.synopsis ? item.synopsis : '' }]}
         tabIndex={0}
         activeIndex={-1}
