@@ -10,12 +10,13 @@ function TextDisplay(props) {
     headerStyle,
     headerClass,
     bodyClass,
+    wrapperClass,
     ...rest
   } = props;
 
   const headerClasses = classNames(styles.header, headerClass);
   const bodyClasses = classNames(styles.body_text, bodyClass);
-  const wrapperClasses = classNames(styles.main_wrapper);
+  const wrapperClasses = classNames(styles.main_wrapper, wrapperClass);
 
   return (
     <div className={wrapperClasses} {...rest}>
@@ -42,6 +43,7 @@ TextDisplay.propTypes = {
       value: PropTypes.string,
     })
   ),
+  wrapperClass: PropTypes.array,
   headerClass: PropTypes.array,
   headerStyle: PropTypes.object,
   bodyClass: PropTypes.array,

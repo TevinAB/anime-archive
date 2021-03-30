@@ -10,13 +10,21 @@
 .search_wrapper {
   display: flex;
   height: auto;
-  max-height: 30px;
+  max-height: 35px;
+  background-color: rgba(153, 153, 153, 0.281);
 }
 
 .searchBox {
-  padding: 3px 5px;
+  padding: 10px 5px;
   font-size: 14px;
   width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.selectBox {
+  background-color: transparent;
+  border: none;
 }
 
 .results_wrapper {

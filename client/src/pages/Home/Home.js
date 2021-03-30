@@ -12,7 +12,7 @@ const RESPONSE_LIMIT = 16;
 function Home(props) {
   const { history } = props;
   return (
-    <main>
+    <article>
       <DisplaySection
         sectionTitle='Top Anime'
         sectionType={TOP_ANIME}
@@ -28,7 +28,7 @@ function Home(props) {
         sectionType={TOP_CHARACTERS}
         history={history}
       />
-    </main>
+    </article>
   );
 }
 
