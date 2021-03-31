@@ -31,6 +31,7 @@
     "concurrently": "^6.0.0",
     "config": "^3.3.6",
     "express": "^4.17.1",
+    "google-auth-library": "^7.0.3",
     "mongoose": "^5.11.19",
     "request": "^2.88.2"
   },

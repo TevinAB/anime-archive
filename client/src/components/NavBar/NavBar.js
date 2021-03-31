@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './NavBar.module.scss';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Search from '../Search';
 import IconButton from '../IconButton';
+import { signOut } from '../../redux/auth';
 
 function NavBar(props) {
   const { history } = props;
   const [showSearch, setShowSearch] = useState(false);
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const searchClasses = classNames(
     styles.search_container,
@@ -40,12 +44,25 @@ function NavBar(props) {
             onClick={() => console.log('clicked')}
           />
           {/**should show login/logout depending on auth state */}
-          <IconButton
-            iconClass={[styles.md_icon, 'fas fa-sign-in-alt']}
-            tooltip={'login'}
-            ariaLabel={'login'}
-            onClick={() => console.log('clicked')}
-          />
+          {!isAuthenticated ? (
+            <IconButton
+              iconClass={[styles.md_icon, 'fas fa-sign-in-alt']}
+              tooltip={'login'}
+              ariaLabel={'login'}
+              onClick={() => (window.location = '/login')}
+            />
+          ) : (
+            <IconButton
+              iconClass={[styles.md_icon, 'fas fa-sign-out-alt']}
+              tooltip={'logout'}
+              ariaLabel={'logout'}
+              onClick={() => {
+                var auth2 = window.gapi.auth2.getAuthInstance();
+                auth2.signOut();
+                dispatch(signOut());
+              }}
+            />
+          )}
         </div>
       </header>
     </>
