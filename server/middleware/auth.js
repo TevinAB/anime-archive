@@ -20,7 +20,10 @@ async function auth(request, response, next) {
 
     const payload = ticket.getPayload();
     const email = payload['email'];
-    request.user = { email };
+    const username = payload['name'];
+    const profilePic = payload['picture'];
+
+    request.user = { email, username, profilePic };
     next();
   } catch (error) {
     response.status(400).json({ msg: 'Token is invalid.', error });

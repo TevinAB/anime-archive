@@ -9,6 +9,7 @@ import SearchResults from './pages/SearchResults';
 import Information from './pages/Information';
 import Login from './pages/Login';
 import store from './redux/store';
+import AddComment from './components/AddComment';
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
                 path='/login'
                 render={(props) => <Login {...props} />}
               />
+              <Route path='/commentsDev'>
+                <AddComment />
+              </Route>
             </Switch>
           </Container>
         </Provider>

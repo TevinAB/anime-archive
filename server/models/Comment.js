@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const commentSchema = new Schema({
   username: String,
   userPic: String,
+  email: String, //used in place of an id for unique identification purposes
   commentBody: String,
   date: {
     type: Date,

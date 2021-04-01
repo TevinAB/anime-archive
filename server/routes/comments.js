@@ -7,7 +7,9 @@ const {
   deleteComment,
   likeComment,
   unlikeComment,
+  sortComments,
 } = require('../handlers/comments');
+const { auth } = require('../middleware/auth');
 
 /**
  * @route /comments/:id
@@ -18,27 +20,36 @@ const {
 router.get('/:id', getComments);
 
 /**
+ * @route /comments/sort/:sortType/:id
+ * @description Used to sort comments by a specific sort order
+ * @param sortType - The sort order type [newest, oldest,top]
+ * @param id - Page id
+ * @access Public
+ */
+router.get('/sort/:sortType/:id', sortComments);
+
+/**
  * @route /comments
  * @description Used to add a new comment to a page
- * @access Public [change to private]
+ * @access Private
  */
-router.post('/', addComment);
+router.post('/', auth, addComment);
 
 /**
  * @route /comments/:id
  * @description Used to update a comment
  * @param id - Comment id
- * @access Public [change to private]
+ * @access Private
  */
-router.put('/:id', updateComment);
+router.put('/:id', auth, updateComment);
 
 /**
  * @route /comments/:id
  * @description Used to delete a comment
  * @param id - Comment id
- * @access Public [change to private]
+ * @access Private
  */
-router.delete('/:id', deleteComment);
+router.delete('/:id', auth, deleteComment);
 
 /**
  * @route /comments/:id
