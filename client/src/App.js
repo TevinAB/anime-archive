@@ -9,7 +9,7 @@ import SearchResults from './pages/SearchResults';
 import Information from './pages/Information';
 import Login from './pages/Login';
 import store from './redux/store';
-import AddComment from './components/AddComment';
+import CommentBox from './components/CommentBox';
 
 function App() {
   return (
@@ -38,7 +38,13 @@ function App() {
                 render={(props) => <Login {...props} />}
               />
               <Route path='/commentsDev'>
-                <AddComment />
+                <CommentBox
+                  likes={'1,200'}
+                  username='Tevin Banton'
+                  imageUrl='https://lh3.googleusercontent.com/a-/AOh14GgGicxP3fkRpTXGPMhSF6q0w0CrXI3uQeOI85q3=s96-c'
+                  commentBody='comment section passes a function to commentBox and addComment which is called when
+                  a user presses the POST button.'
+                />
               </Route>
             </Switch>
           </Container>

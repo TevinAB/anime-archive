@@ -23,9 +23,10 @@ export const checkTokenIntegrity = (token) => (dispatch) => {
   axios
     .post('/api/auth', body, config)
     .then((response) => {
+      const { email, username, profilePic } = response.data;
       dispatch({
         type: TOKEN_VALID,
-        payload: { email: response.data.email, token },
+        payload: { email, username, profilePic, token },
       });
     })
     .catch(() => dispatch({ type: TOKEN_INVALID }));
@@ -38,6 +39,8 @@ export const signOut = () => ({
 //Reducer
 const initialState = {
   email: null,
+  username: null,
+  profilePic: null,
   isAuthenticated: false,
   verifying: false,
 };
@@ -45,7 +48,14 @@ const initialState = {
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
     case VERIFYING_TOKEN:
-      return { ...state, email: null, isAuthenticated: null, verifying: true };
+      return {
+        ...state,
+        email: null,
+        username: null,
+        profilePic: null,
+        isAuthenticated: null,
+        verifying: true,
+      };
 
     case TOKEN_VALID:
       //stash the token in localStorage
@@ -54,6 +64,8 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         email: action.payload.email,
+        username: action.payload.username,
+        profilePic: action.payload.profilePic,
         isAuthenticated: true,
         verifying: false,
       };
@@ -65,6 +77,8 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         email: null,
+        username: null,
+        profilePic: null,
         isAuthenticated: false,
         verifying: false,
       };
@@ -74,6 +88,8 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         email: null,
+        username: null,
+        profilePic: null,
         isAuthenticated: false,
         verifying: false,
       };

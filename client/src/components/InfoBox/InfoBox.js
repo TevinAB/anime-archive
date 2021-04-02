@@ -65,6 +65,7 @@ InfoBox.propTypes = {
 InfoBox.defaultProps = {
   altText: '',
   bodyTexts: [],
+  currentIndex: -1,
 };
 
 export default InfoBox;

@@ -10,7 +10,7 @@
 
 .text_area {
   display: block;
-  width: 400px;
+  width: 100%;
   resize: vertical;
   min-height: 100px;
   max-height: 400px;
@@ -33,8 +33,8 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .text_area {
-    width: 270px;
-  }
-}
+// @media screen and (max-width: 768px) {
+//   .text_area {
+//     width: 270px;
+//   }
+// }
