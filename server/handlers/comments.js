@@ -81,19 +81,6 @@ module.exports = {
     );
   },
 
-  deleteComment: async (req, res) => {
-    const errorMessage = 'Error deleting comment';
-
-    await editHandler(
-      res,
-      updateAndSaveDoc.bind(this, req.params.id, Comment, (comment) => {
-        comment.commentBody = '[This comment was deleted]';
-        comment.deleted = true;
-      }),
-      errorMessage
-    );
-  },
-
   likeComment: async (req, res) => {
     const errorMessage = 'Error liking comment';
     //get the email of the user who liked the comment
@@ -137,7 +124,9 @@ module.exports = {
 
         case 'top':
           //most likes
-          sortedComments = comments.sort((a, b) => b.likes - a.likes);
+          sortedComments = comments.sort(
+            (a, b) => b.likes.length - a.likes.length
+          );
           break;
 
         default:
