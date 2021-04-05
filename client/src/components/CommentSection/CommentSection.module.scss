@@ -14,3 +14,9 @@
     border-right: 1px solid $lineColor;
   }
 }
+
+.comment_section_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

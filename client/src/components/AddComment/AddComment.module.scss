@@ -31,10 +31,7 @@
   &:hover {
     background-color: #135ab8;
   }
+  &:disabled {
+    background-color: #95b9e9fd;
+  }
 }
-
-// @media screen and (max-width: 768px) {
-//   .text_area {
-//     width: 270px;
-//   }
-// }

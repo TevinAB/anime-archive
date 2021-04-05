@@ -7,9 +7,9 @@ import CommentBox from '../CommentBox';
 
 function CommentSection(props) {
   const { pageId } = props;
-  //const { data, isLoading } = useFetch(`/api/comments/${pageId}`);
   const [comments, setComments] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [sortType, setSortType] = useState('newest');
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -24,6 +24,19 @@ function CommentSection(props) {
         setLoading(false);
       });
   }, [pageId]);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`/api/comments/sort/${sortType}/${pageId}`)
+      .then((response) => {
+        setComments(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        //do something soon
+      });
+  }, [sortType, pageId]);
 
   const postComment = (commentData) => {
     axios
@@ -68,11 +81,19 @@ function CommentSection(props) {
       });
   };
 
-  const sortComments = () => {};
-
   return (
     <section className={styles.comment_section}>
-      <h5>Total Comments ({comments.length})</h5>
+      <div className={styles.comment_section_top}>
+        <h5>Total Comments ({comments.length})</h5>
+        <div>
+          Sort By:{' '}
+          <select onChange={(event) => setSortType(event.target.value)}>
+            <option>newest</option>
+            <option>oldest</option>
+            <option>top</option>
+          </select>
+        </div>
+      </div>
       <AddComment
         pageId={pageId}
         postComment={postComment}
@@ -92,6 +113,7 @@ function CommentSection(props) {
                   imageUrl={comment.userPic}
                   username={comment.username}
                   marginDepth={comment.marginDepth}
+                  //Email of the person who wrote this comment
                   commenterEmail={comment.email}
                   postComment={postComment}
                   likeComment={likeComment}

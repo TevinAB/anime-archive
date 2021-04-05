@@ -12,7 +12,9 @@ function AddComment(props) {
     editComment,
     isEditing,
   } = props;
-  const { email, username, profilePic } = useSelector((state) => state.auth);
+  const { email, username, profilePic, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
   const [commentBody, setCommentBody] = useState('');
 
@@ -45,7 +47,9 @@ function AddComment(props) {
           onChange={(event) => setCommentBody(event.target.value)}
           value={commentBody}
         ></textarea>
-        <button className={styles.post_button}>Post</button>
+        <button className={styles.post_button} disabled={!isAuthenticated}>
+          {isAuthenticated ? 'Post' : 'Log In to Post Comment'}
+        </button>
       </form>
     </div>
   );

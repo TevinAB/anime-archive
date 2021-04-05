@@ -26,9 +26,7 @@ function CommentBox(props) {
 
   const [isReplying, setReplying] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const { isAuthenticated, email: userEmail } = useSelector(
-    (state) => state.auth
-  );
+  const { email: userEmail } = useSelector((state) => state.auth);
 
   const handleLike = (event) => {
     event.preventDefault();
@@ -68,14 +66,18 @@ function CommentBox(props) {
             setEditing(false);
           }}
         />
-        <IconButton
-          iconClass={['fas fa-pen']}
-          tooltip='Edit'
-          onClick={() => {
-            setReplying(!isReplying);
-            setEditing(true);
-          }}
-        />
+
+        {/**show edit button if the comment belongs to the user logged in */}
+        {userEmail === commenterEmail && (
+          <IconButton
+            iconClass={['fas fa-pen']}
+            tooltip='Edit'
+            onClick={() => {
+              setReplying(!isReplying);
+              setEditing(true);
+            }}
+          />
+        )}
       </div>
 
       {/*Add comment component, for replying to this comment */}

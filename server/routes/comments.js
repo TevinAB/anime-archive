@@ -4,7 +4,6 @@ const {
   getComments,
   addComment,
   updateComment,
-  deleteComment,
   likeComment,
   sortComments,
 } = require('../handlers/comments');
@@ -41,14 +40,6 @@ router.post('/', auth, addComment);
  * @access Private
  */
 router.put('/:id', auth, updateComment);
-
-/**
- * @route /comments/:id
- * @description Used to delete a comment
- * @param id - Comment id
- * @access Private
- */
-router.delete('/:id', auth, deleteComment);
 
 /**
  * @route /comments/vote/:id
