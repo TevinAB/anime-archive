@@ -1,3 +1,9 @@
+/**
+ * Updates a document using the updateDoc function and handles response.
+ * @param {*} res The response object
+ * @param {*} updateDoc A function to update the document
+ * @param {*} errorMsg An error message to respond with.
+ */
 async function editHandler(res, updateDoc, errorMsg) {
   try {
     const updatedDoc = await updateDoc();
@@ -36,4 +42,48 @@ function updateAndSaveDoc(docId, model, updateFunc) {
   });
 }
 
-module.exports = { editHandler, updateAndSaveDoc };
+/**
+ * Builds the comment list structure.
+ * @param {*} sortedComments All the comments for a page, sorted by date or likes.
+ * @returns A new array of all the comments in the correct order.
+ */
+function buildCommentList(sortedComments) {
+  if (!sortedComments instanceof Array)
+    new TypeError('sortedComments must be an array');
+
+  //root comments are comments that have no root comment
+  const rootComments = sortedComments.filter(
+    (comment) => comment.rootComment === null
+  );
+  const result = [];
+
+  //recursive function
+  function build(array) {
+    for (let index = 0; index < array.length; index++) {
+      result.push(array[index]);
+
+      //this comment has replies.
+      if (array[index].replies.length > 0) {
+        //build an array of comment objects using the ids from the replies array
+        const commentObjs = [];
+
+        array[index].replies.forEach((id) => {
+          //the type of id is an Object, so the cast to a string is needed
+          const matchIndex = sortedComments.findIndex(
+            (comment) => String(comment._id) === String(id)
+          );
+
+          commentObjs.push(sortedComments[matchIndex]);
+        });
+        //recursive call
+        build(commentObjs);
+      }
+    }
+  }
+
+  build(rootComments);
+
+  return result;
+}
+
+module.exports = { editHandler, updateAndSaveDoc, buildCommentList };

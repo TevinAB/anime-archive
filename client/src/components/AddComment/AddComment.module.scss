@@ -1,0 +1,40 @@
+.wrapper {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.text_area {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 400px;
+}
+
+.post_button {
+  color: white;
+  background-color: #1877f2;
+  border: none;
+  border-radius: 0.4375em;
+  float: right;
+  font-size: 1rem;
+  padding: 0.375em 0.75em;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color ease-in 0.25s;
+
+  &:hover {
+    background-color: #135ab8;
+  }
+}
+
+// @media screen and (max-width: 768px) {
+//   .text_area {
+//     width: 270px;
+//   }
+// }

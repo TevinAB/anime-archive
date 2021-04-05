@@ -5,15 +5,13 @@ const Schema = mongoose.Schema;
 const commentSchema = new Schema({
   username: String,
   userPic: String,
+  email: String, //used in place of an id for unique identification purposes
   commentBody: String,
   date: {
     type: Date,
     default: Date.now,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [],
   replies: [Schema.Types.ObjectId],
   rootComment: Schema.Types.ObjectId, // If this comment is a reply to another comment
   marginDepth: Number, // This is used to determine how much margin is applied when displaying comment

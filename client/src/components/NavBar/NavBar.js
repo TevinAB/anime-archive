@@ -36,13 +36,6 @@ function NavBar(props) {
             onClick={() => setShowSearch(!showSearch)}
             toolTipClass={[styles.search_button]}
           />
-
-          <IconButton
-            iconClass={[styles.md_icon, 'fas fa-cog']}
-            tooltip={'settings'}
-            ariaLabel={'settings'}
-            onClick={() => console.log('clicked')}
-          />
           {/**should show login/logout depending on auth state */}
           {!isAuthenticated ? (
             <IconButton

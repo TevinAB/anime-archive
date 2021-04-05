@@ -2,12 +2,16 @@ import React from 'react';
 import useFetch from '../../hooks';
 import styles from './Information.module.scss';
 import TextDisplay from '../../components/TextDisplay';
+import CommentSection from '../../components/CommentSection';
 
 function Information(props) {
   const { searchType } = props.match.params;
 
   const urlParams = new URLSearchParams(window.location.search);
   const itemId = urlParams.get('id');
+
+  //passed to comment section and used to get comments for this specific page
+  const pageId = searchType + itemId;
 
   const { data, isLoading, error } = useFetch(buildApiPath(searchType, itemId));
   const standardData = normalizeData(data);
@@ -38,6 +42,7 @@ function Information(props) {
               headerText='About'
               bodyTexts={[{ value: standardData.about }]}
             />
+            <CommentSection pageId={pageId} />
           </section>
         </>
       )}

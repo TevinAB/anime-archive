@@ -1,4 +1,8 @@
-const { editHandler, updateAndSaveDoc } = require('./helpers');
+const {
+  editHandler,
+  updateAndSaveDoc,
+  buildCommentList,
+} = require('./helpers');
 
 describe('Edit handler tests', () => {
   let mockUpdateDoc = jest.fn(() => 'doc updated');
@@ -93,5 +97,38 @@ describe('UpdateAndSaveDoc tests', () => {
     await updateAndSaveDoc(documentId, mockModel, mockUpdateFunction);
 
     expect(mockModel.findById).toBeCalledWith(documentId);
+  });
+});
+
+describe('buildCommentList tests', () => {
+  //The list can be unordered as long as 1 is before 2 and 2 is before 3 for _id's.
+  //This is to simulate the sorting on rootComments that would take place irl.
+  //Sorting wasn't included in this test.
+  const unorderedComments = [
+    { _id: '1', rootComment: null, replies: ['1a'] },
+    { _id: '1a2', rootComment: '1a', replies: [] },
+    { _id: '3a', rootComment: '3', replies: [] },
+    { _id: '1a', rootComment: '1', replies: ['1a1', '1a2', '1a3', '1a4'] },
+    { _id: '1a1', rootComment: '1a', replies: [] },
+    { _id: '1a3', rootComment: '1a', replies: [] },
+    { _id: '3b2', rootComment: '3b', replies: [] },
+    { _id: '2', rootComment: null, replies: [] },
+    { _id: '3b', rootComment: '3', replies: ['3b1', '3b2'] },
+    { _id: '3b1', rootComment: '3b', replies: [] },
+    { _id: '1a4', rootComment: '1a', replies: [] },
+    { _id: '3', rootComment: null, replies: ['3a', '3b'] },
+  ];
+  it('should build an ordered list of comments', () => {
+    const commentList = buildCommentList(unorderedComments);
+
+    expect(commentList[0]._id).toBe('1');
+    expect(commentList[1]._id).toBe('1a');
+    expect(commentList[2]._id).toBe('1a1');
+
+    expect(commentList[6]._id).toBe('2');
+
+    expect(commentList[11]._id).toBe('3b2');
+
+    expect(commentList.length).toBe(unorderedComments.length);
   });
 });
