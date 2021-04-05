@@ -1,21 +1,38 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './AddComment.module.scss';
 import PropTypes from 'prop-types';
 
 function AddComment(props) {
-  const { pageId, rootComment, marginDepth, postComment } = props;
+  const {
+    pageId,
+    rootComment,
+    marginDepth,
+    postComment,
+    editComment,
+    isEditing,
+  } = props;
+  const { email, username, profilePic } = useSelector((state) => state.auth);
 
   const [commentBody, setCommentBody] = useState('');
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    postComment({
-      commentBody,
-      pageId,
-      rootComment,
-      marginDepth,
-    });
+    //determine which function gets called
+    !isEditing
+      ? postComment({
+          email,
+          username,
+          profilePic,
+          commentBody,
+          pageId,
+          rootComment,
+          marginDepth,
+        })
+      : editComment(rootComment, commentBody);
+
+    setCommentBody('');
   };
 
   return (
@@ -26,9 +43,8 @@ function AddComment(props) {
           placeholder='Share your thoughts...'
           aria-label='add comment'
           onChange={(event) => setCommentBody(event.target.value)}
-        >
-          {commentBody}
-        </textarea>
+          value={commentBody}
+        ></textarea>
         <button className={styles.post_button}>Post</button>
       </form>
     </div>
@@ -47,6 +63,13 @@ AddComment.propTypes = {
 
   //Used to determine how much indentation a comment will have.
   marginDepth: PropTypes.number,
+
+  //If this component is being used to edit a comment or add a new one
+  isEditing: PropTypes.bool,
+};
+
+AddComment.defaultProps = {
+  isEditing: false,
 };
 
 export default AddComment;

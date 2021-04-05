@@ -42,6 +42,7 @@ const initialState = {
   username: null,
   profilePic: null,
   isAuthenticated: false,
+  token: null,
   verifying: false,
 };
 
@@ -53,6 +54,7 @@ export default function authReducer(state = initialState, action) {
         email: null,
         username: null,
         profilePic: null,
+        token: null,
         isAuthenticated: null,
         verifying: true,
       };
@@ -66,6 +68,7 @@ export default function authReducer(state = initialState, action) {
         email: action.payload.email,
         username: action.payload.username,
         profilePic: action.payload.profilePic,
+        token: action.payload.token,
         isAuthenticated: true,
         verifying: false,
       };
@@ -79,6 +82,7 @@ export default function authReducer(state = initialState, action) {
         email: null,
         username: null,
         profilePic: null,
+        token: null,
         isAuthenticated: false,
         verifying: false,
       };
@@ -90,6 +94,7 @@ export default function authReducer(state = initialState, action) {
         email: null,
         username: null,
         profilePic: null,
+        token: null,
         isAuthenticated: false,
         verifying: false,
       };

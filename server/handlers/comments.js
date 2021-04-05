@@ -27,7 +27,7 @@ module.exports = {
   addComment: async (req, res) => {
     const newComment = new Comment({
       username: req.body.username,
-      userPic: req.body.userPic,
+      userPic: req.body.profilePic,
       email: req.body.email,
       commentBody: req.body.commentBody,
       rootComment: req.body.rootComment,
@@ -49,7 +49,9 @@ module.exports = {
 
       /**Build comment list to respond with */
 
-      const allComments = await Comment.find({ pageId: id }).select('-__v');
+      const allComments = await Comment.find({
+        pageId: req.body.pageId,
+      }).select('-__v');
       //sort by date is the default. Newest to oldest.
       const sortedComments = allComments
         .slice()
@@ -84,42 +86,33 @@ module.exports = {
 
     await editHandler(
       res,
-      updateAndSaveDoc.bind(
-        this,
-        req.params.id,
-        Comment,
-        (comment) => (comment.commentBody = 'This comment was deleted')
-      ),
+      updateAndSaveDoc.bind(this, req.params.id, Comment, (comment) => {
+        comment.commentBody = '[This comment was deleted]';
+        comment.deleted = true;
+      }),
       errorMessage
     );
   },
 
   likeComment: async (req, res) => {
     const errorMessage = 'Error liking comment';
+    //get the email of the user who liked the comment
+    const { likerEmail: email } = req.body;
+
+    function handleLike(comment) {
+      //if the user already liked this comment, remove like, else add it
+      if (comment.likes.includes(email)) {
+        comment.likes = comment.likes.filter(
+          (storedEmail) => storedEmail !== email
+        );
+      } else {
+        comment.likes.push(email);
+      }
+    }
 
     await editHandler(
       res,
-      updateAndSaveDoc.bind(
-        this,
-        req.params.id,
-        Comment,
-        (comment) => (comment.likes += 1)
-      ),
-      errorMessage
-    );
-  },
-
-  unlikeComment: async (req, res) => {
-    const errorMessage = 'Error unliking comment';
-
-    await editHandler(
-      res,
-      updateAndSaveDoc.bind(
-        this,
-        req.params.id,
-        Comment,
-        (comment) => (comment.likes -= 1)
-      ),
+      updateAndSaveDoc.bind(this, req.params.id, Comment, handleLike),
       errorMessage
     );
   },

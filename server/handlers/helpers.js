@@ -68,11 +68,13 @@ function buildCommentList(sortedComments) {
         const commentObjs = [];
 
         array[index].replies.forEach((id) => {
-          commentObjs.push(
-            sortedComments.find((comment) => comment._id === id)
+          //the type of id is an Object, so the cast to a string is needed
+          const matchIndex = sortedComments.findIndex(
+            (comment) => String(comment._id) === String(id)
           );
-        });
 
+          commentObjs.push(sortedComments[matchIndex]);
+        });
         //recursive call
         build(commentObjs);
       }

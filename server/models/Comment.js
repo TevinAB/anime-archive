@@ -11,10 +11,7 @@ const commentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [],
   replies: [Schema.Types.ObjectId],
   rootComment: Schema.Types.ObjectId, // If this comment is a reply to another comment
   marginDepth: Number, // This is used to determine how much margin is applied when displaying comment

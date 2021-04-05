@@ -6,7 +6,6 @@ const {
   updateComment,
   deleteComment,
   likeComment,
-  unlikeComment,
   sortComments,
 } = require('../handlers/comments');
 const { auth } = require('../middleware/auth');
@@ -52,19 +51,11 @@ router.put('/:id', auth, updateComment);
 router.delete('/:id', auth, deleteComment);
 
 /**
- * @route /comments/:id
+ * @route /comments/vote/:id
  * @description Used to like a comment
  * @param id - Comment id
- * @access Public [change to private]
+ * @access Private
  */
-router.put('/like/:id', likeComment);
-
-/**
- * @route /comments/:id
- * @description Used to unlike a comment
- * @param id - Comment id
- * @access Public [change to private]
- */
-router.put('/unlike/:id', unlikeComment);
+router.put('/vote/:id', auth, likeComment);
 
 module.exports = router;
