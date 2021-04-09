@@ -112,8 +112,7 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-#config files
-config/
+
 
 #cypress examples
 .examples
