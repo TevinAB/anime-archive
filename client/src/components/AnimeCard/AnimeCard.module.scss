@@ -6,6 +6,11 @@ $title-font: 0.75rem;
   display: inline-block;
   margin: 0.75rem;
   cursor: pointer;
+
+  &:focus {
+    outline-color: #f50056e7;
+    outline-width: 8px;
+  }
 }
 
 .card {
