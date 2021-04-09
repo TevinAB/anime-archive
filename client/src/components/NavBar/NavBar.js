@@ -21,7 +21,7 @@ function NavBar(props) {
 
   return (
     <>
-      <header role='banner' className={styles.header}>
+      <header id='nav_header' role='banner' className={styles.header}>
         <Link to='/' className={styles.link}>
           <h3 className={styles.logo}>AnimeArchive</h3>
         </Link>
