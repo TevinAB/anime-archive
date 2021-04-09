@@ -25,13 +25,13 @@ function SearchResults(props) {
   const { data, isLoading } = useFetch(apiPath);
 
   const handlePageChange = (page) => {
-    //weird glitch with page num starting from zero instead of 1 with pagination comp
+    //weird glitch with page num starting from zero instead of 1 with pagination component
     let num = page.selected + 1;
 
     history.push(`/search/${searchType}/?q=${searchText}&page=${num}`);
   };
 
-  const items = data?.results?.map((item, index) => {
+  const items = data?.results?.map((item) => {
     return (
       <InfoBox
         imageClass={[styles.img]}
@@ -49,14 +49,15 @@ function SearchResults(props) {
         //Displays a synopsis with each search item if that field is available
         bodyTexts={[{ value: item.synopsis ? item.synopsis : '' }]}
         tabIndex={0}
-        activeIndex={-1}
+        //to prevent it from going into focus immediately after loading.
+        activeIndex={-99}
       />
     );
   });
 
   return (
     <section className={styles.section_wrapper}>
-      <h3>Search Results</h3>
+      <h1 className={styles.page_title}>Search Results</h1>
       <div className={styles.item_wrapper}>
         {isLoading ? 'loading...' : items}
       </div>

@@ -48,9 +48,10 @@ function DisplaySection(props) {
       <AnimeCard
         key={item.mal_id}
         image={item.image_url}
-        alt={item.title}
+        alt=''
         title={item.title}
         badgeValue={item.rank}
+        tabIndex={0}
         onClick={() =>
           history.push(
             `/information/${isAnime ? 'anime' : 'character'}/?id=${item.mal_id}`

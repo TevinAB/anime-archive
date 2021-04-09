@@ -27,7 +27,8 @@ function InfoBox(props) {
   const wrapperRef = useRef(null); //used to focus the div when used in search results
 
   useEffect(() => {
-    if (activeIndex === currentIndex) wrapperRef.current.focus();
+    if (currentIndex && activeIndex === currentIndex)
+      wrapperRef.current.focus();
   });
 
   return (

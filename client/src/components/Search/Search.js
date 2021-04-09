@@ -87,7 +87,7 @@ function Search(props) {
             className={styles.searchBox}
             type='text'
             role='search'
-            placeholder='Search...'
+            placeholder='Search Here'
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
