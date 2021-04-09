@@ -73,7 +73,7 @@ function Search(props) {
       {...rest}
     >
       {/** The search box, remember to add action path to form*/}
-      <form method='get' onSubmit={handleSearch}>
+      <form id='search_form' method='get' onSubmit={handleSearch}>
         <div className={styles.search_wrapper}>
           <select
             className={styles.selectBox}
@@ -84,6 +84,7 @@ function Search(props) {
             <option>character</option>
           </select>
           <input
+            id='search_field'
             className={styles.searchBox}
             type='text'
             role='search'
@@ -133,7 +134,7 @@ function SearchResults(props) {
 
   return (
     showResults && (
-      <div className={styles.results_wrapper}>
+      <div id='search_results' className={styles.results_wrapper}>
         <div className={resultDisplayClasses}>
           {data.results &&
             data.results.map((item, index) => {

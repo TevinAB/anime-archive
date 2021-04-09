@@ -114,3 +114,6 @@ dist
 
 #config files
 config/
+
+#cypress examples
+.examples
