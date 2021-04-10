@@ -5,6 +5,7 @@
   "main": " server/index.js",
   "scripts": {
     "test": "jest",
+    "start": "node server/index.js",
     "test:watch": "jest --watch",
     "server": "nodemon server/index.js",
     "client": "npm start --prefix client",
