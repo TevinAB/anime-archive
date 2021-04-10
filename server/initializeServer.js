@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 //used to serve the index.html in order to fix error that stems from client side routing and heroku in prod
 if (process.env.NODE_ENV === 'production') {
-  app.get('^/(login)?$', (req, res) => {
+  app.get('^/(login)*$', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 }
